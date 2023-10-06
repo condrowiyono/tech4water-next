@@ -33,7 +33,7 @@ export interface ResponseError {
 export interface ErrorResponse extends AxiosError<ResponseError> {}
 
 export const instance = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://water.orbitallabs.net/",
 });
 
 export const noInterceptorFetcher = async (
