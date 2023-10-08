@@ -2,7 +2,7 @@ import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
 
-const defaultTimezone = "Asia/Makassar"
+const defaultTimezone = "Asia/Singapore"
 
 dayjs.extend(utc)
 dayjs.extend(timezone)

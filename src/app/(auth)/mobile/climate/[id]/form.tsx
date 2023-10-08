@@ -1,41 +1,23 @@
 "use client";
 
-import {
-  Form,
-  DatePicker,
-  InputNumber,
-  Select,
-  Button,
-  notification,
-  Alert,
-  Table,
-  Row,
-  Col,
-} from "antd";
+import { Form, DatePicker, InputNumber, Select, Button, notification, Alert, Row, Col } from "antd";
 import dayjs from "dayjs";
-import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useRequest } from "ahooks";
+import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useParams, useRouter } from "next/navigation";
-import { ClimateData } from "../../../interfaces.ts/interface";
+import { ClimateData } from "@/interfaces";
 
 const save = (data: Partial<ClimateData>) => {
-  return fetcher<ClimateData>({
-    url: "/mobile/climates",
-    method: "POST",
-    data,
-  });
+  return fetcher({ url: "/mobile/climates", method: "POST", data });
 };
 
-type InputFormProps = {
-  initialValues?: Partial<ClimateData>;
-};
-const InputForm = ({ initialValues }: InputFormProps) => {
+const InputForm = ({ value }: { value: ClimateData }) => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
   const { run, loading } = useRequest(save, {
     manual: true,
-    onSuccess: () => notification.success({ message: "Sukses Menyimapn Data" }),
+    onSuccess: () => notification.success({ message: "Sukses Menyimpan Data" }),
     onError: (err) => {
       const error = err as ErrorResponse;
       notification.error({
@@ -56,10 +38,10 @@ const InputForm = ({ initialValues }: InputFormProps) => {
   };
 
   return (
-    <Form onFinish={handleFinish} disabled={!!initialValues}>
-      {initialValues && <Alert type="success" message="Data sudah diinput" />}
+    <Form onFinish={handleFinish} initialValues={{ date: dayjs() }} layout="vertical">
+      {value && <Alert type="success" message="Data sudah diinput" />}
       <Form.Item label="Tanngal" name="date">
-        <DatePicker disabled value={dayjs()} />
+        <DatePicker disabled />
       </Form.Item>
       <Row gutter={12}>
         <Col span={12}>
@@ -130,14 +112,8 @@ const InputForm = ({ initialValues }: InputFormProps) => {
           ]}
         />
       </Form.Item>
-      <Form.Item
-        label="Durasi Penyinaran Matahari"
-        name="illumination_duration"
-      >
-        <InputNumber
-          placeholder="Durasi Penyinaran Matahari"
-          style={{ width: "100%" }}
-        />
+      <Form.Item label="Durasi Penyinaran Matahari" name="illumination_duration">
+        <InputNumber placeholder="Durasi Penyinaran Matahari" style={{ width: "100%" }} />
       </Form.Item>
 
       <Button loading={loading} block type="primary" htmlType="submit">

@@ -1,27 +1,18 @@
-import BackButton from "../../components/BackButton";
+import { Descriptions } from "antd";
+
 import fetcher from "@/utils/fetcher";
-import { WaterLevelData, River } from "../../interfaces.ts/interface";
-import { Descriptions, Segmented } from "antd";
-import { cookies } from "next/headers";
-import { formatDateTime } from "@/utils/dayjs";
-import InputForm from "./component/form";
+import { WaterLevelData, River } from "@/interfaces";
+import InputForm from "./form";
+import BackButton from "../../components/BackButton";
 
 type WaterLevelDetailPageProps = {
   params: { id: string };
 };
 
 const fetch = async (id: string) => {
-  const token = cookies().get("token")?.value;
-
   return Promise.all([
-    fetcher<River>({
-      url: `/rivers/${id}`,
-      headers: { Authorization: `Bearer ${token}` },
-    }),
-    fetcher<WaterLevelData[]>({
-      url: `/mobile/waterlevels/today/${id}`,
-      headers: { Authorization: `Bearer ${token}` },
-    }),
+    fetcher<River>({ url: `/rivers/${id}` }),
+    fetcher<WaterLevelData[]>({ url: `/waterlevels/today/${id}` }),
   ]);
 };
 

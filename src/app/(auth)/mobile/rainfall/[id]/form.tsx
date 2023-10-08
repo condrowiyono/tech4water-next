@@ -1,38 +1,24 @@
 "use client";
 
-import {
-  Form,
-  DatePicker,
-  InputNumber,
-  Select,
-  Button,
-  notification,
-  Alert,
-} from "antd";
+import { Form, DatePicker, InputNumber, Select, Button, notification } from "antd";
 import dayjs from "dayjs";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
-import { RainfallData } from "../../../interfaces.ts/interface";
+import { RainfallData } from "@/interfaces";
 
 const save = (data: Partial<RainfallData>) => {
-  return fetcher<RainfallData>({
-    url: "/mobile/rainfalls",
-    method: "POST",
-    data,
-  });
+  return fetcher({ url: "/mobile/rainfalls", method: "POST", data });
 };
 
-type RainfallInputFormProps = {
-  initialValues?: Partial<RainfallData>;
-};
-const RainfallInputForm = ({ initialValues }: RainfallInputFormProps) => {
+const InputForm = ({ value }: { value: RainfallData }) => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
   const { run, loading } = useRequest(save, {
     manual: true,
-    onSuccess: () => notification.success({ message: "Sukses Menyimapn Data" }),
+    onFinally: router.refresh,
+    onSuccess: () => notification.success({ message: "Sukses Menyimpan Data" }),
     onError: (err) => {
       const error = err as ErrorResponse;
       notification.error({
@@ -40,7 +26,6 @@ const RainfallInputForm = ({ initialValues }: RainfallInputFormProps) => {
         description: error.response?.data.errors,
       });
     },
-    onFinally: router.refresh,
   });
 
   const handleFinish = (data: Partial<RainfallData>) => {
@@ -49,8 +34,7 @@ const RainfallInputForm = ({ initialValues }: RainfallInputFormProps) => {
   };
 
   return (
-    <Form disabled={!!initialValues} onFinish={handleFinish}>
-      {initialValues && <Alert type="success" message="Data sudah diinput" />}
+    <Form initialValues={{ date: dayjs() }} disabled={!!value} onFinish={handleFinish} layout="vertical">
       <Form.Item label="Tanngal" name="date">
         <DatePicker disabled />
       </Form.Item>
@@ -58,12 +42,7 @@ const RainfallInputForm = ({ initialValues }: RainfallInputFormProps) => {
         <InputNumber type="number" inputMode="numeric" suffix="mm" />
       </Form.Item>
       <Form.Item label="Lama Hujan" name="duration">
-        <InputNumber
-          className="w-full"
-          type="number"
-          inputMode="numeric"
-          suffix="menit"
-        />
+        <InputNumber className="w-full" type="number" inputMode="numeric" suffix="menit" />
       </Form.Item>
       <Form.Item label="Keterangan" name="description">
         <Select
@@ -92,4 +71,4 @@ const RainfallInputForm = ({ initialValues }: RainfallInputFormProps) => {
   );
 };
 
-export default RainfallInputForm;
+export default InputForm;

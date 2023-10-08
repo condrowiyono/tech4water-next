@@ -1,6 +1,6 @@
 import { Card, Space } from "antd";
 import Link from "next/link";
-import { River } from "../interfaces.ts/interface";
+import { River } from "@/interfaces";
 
 const mapHref = new Map([
   ["pch", "/mobile/rainfall"],

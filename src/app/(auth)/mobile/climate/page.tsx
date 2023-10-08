@@ -1,13 +1,10 @@
 import BackButton from "../components/BackButton";
 import RiverCard from "../components/RiverCard";
 import fetcher from "@/utils/fetcher";
-import { River } from "../interfaces.ts/interface";
+import { River } from "@/interfaces";
 
 const ClimatePage = async () => {
-  const river = await fetcher<River[]>({
-    url: "/rivers",
-    params: { type: "iklim" },
-  });
+  const river = await fetcher<River[]>({ url: "/rivers", params: { type: "iklim" } });
 
   return (
     <>

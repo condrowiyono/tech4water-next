@@ -1,27 +1,18 @@
 import BackButton from "../../components/BackButton";
 import fetcher from "@/utils/fetcher";
-import { RainfallData, River } from "../../interfaces.ts/interface";
-import { Descriptions } from "antd";
-import { cookies } from "next/headers";
-import { formatDateTime } from "@/utils/dayjs";
-import RainfallInputForm from "./component/form";
+import { RainfallData, River } from "@/interfaces";
+import { Alert, Descriptions, Space } from "antd";
+import InputForm from "./form";
+import Detail from "./detail";
 
 type RainfallDetailPageProps = {
   params: { id: string };
 };
 
 const fetch = async (id: string) => {
-  const token = cookies().get("token")?.value;
-
   return Promise.all([
-    fetcher<River>({
-      url: `/rivers/${id}`,
-      headers: { Authorization: `Bearer ${token}` },
-    }),
-    fetcher<RainfallData>({
-      url: `/mobile/rainfalls/today/${id}`,
-      headers: { Authorization: `Bearer ${token}` },
-    }),
+    fetcher<River>({ url: `/rivers/${id}` }),
+    fetcher<RainfallData>({ url: `/rainfalls/today/${id}` }),
   ]);
 };
 
@@ -46,19 +37,17 @@ const RainfallDetailPage = async ({ params }: RainfallDetailPageProps) => {
             label: "Kabupaten",
             children: river.data.city || "-",
           },
-          {
-            key: "date",
-            label: "Data diinput pada",
-            children: data.data?.date ? formatDateTime(data.data?.date) : "-",
-          },
-          {
-            key: "created_by",
-            label: "Data diinput oleh",
-            children: data.data?.user.email || "-",
-          },
         ]}
       />
-      <RainfallInputForm initialValues={data.data} />
+      {data.data ? (
+        <Space direction="vertical" className="w-full">
+          <div className="text-xl">Data Hari Ini</div>
+          <Alert type="success" message="Data sudah diinput" />
+          <Detail value={data.data} />
+        </Space>
+      ) : (
+        <InputForm value={data.data} />
+      )}
     </>
   );
 };

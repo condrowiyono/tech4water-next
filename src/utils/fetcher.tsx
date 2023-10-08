@@ -1,10 +1,7 @@
-import type {
-  AxiosError,
-  AxiosRequestConfig,
-  RawAxiosRequestConfig,
-} from "axios";
+import { getToken } from "next-auth/jwt";
+
+import type { AxiosError, RawAxiosRequestConfig } from "axios";
 import axios from "axios";
-import { getCookie } from "./cookies";
 
 export interface PayloadList {
   page?: number;
@@ -33,40 +30,32 @@ export interface ResponseError {
 export interface ErrorResponse extends AxiosError<ResponseError> {}
 
 export const instance = axios.create({
-  baseURL: "https://water.orbitallabs.net/",
+  baseURL: "http://localhost:8000/",
 });
 
-export const noInterceptorFetcher = async (
-  requestConfig: AxiosRequestConfig
-) => {
-  try {
-    instance.interceptors.request.use(
-      (config) => config,
-      (error) => Promise.reject(error)
-    );
-    const { data } = await instance.request(requestConfig);
-    return data;
-  } catch (error) {
-    throw (error as AxiosError).response;
-  }
-};
-
 const fetcher = async <T, D = any>(requestConfig: RawAxiosRequestConfig<D>) => {
+  console.log(requestConfig);
   try {
     instance.interceptors.request.use(
-      (config) => {
-        const token = getCookie("token");
-        if (token && config.headers)
-          config.headers["Authorization"] = `Bearer ${token}`;
-        return config;
+      async (config) => {
+        try {
+          // const session = await getSession();
+          // const token = session?.accessToken;
+
+          // if (token && config.headers) config.headers["Authorization"] = `Bearer ${token}`;
+          return config;
+        } catch (err) {
+          console.log(err);
+          return config;
+        }
       },
       (error) => Promise.reject(error)
     );
+
     const { data } = await instance.request<Response<T>>(requestConfig);
     return Promise.resolve(data);
   } catch (err) {
     const error = err as AxiosError<ResponseError>;
-    console.log(error.response?.data);
     throw error;
   }
 };

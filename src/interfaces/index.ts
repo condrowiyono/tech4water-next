@@ -7,7 +7,7 @@ type User = {
   created_at: string;
   updated_at: string;
   deleted_at: null | string;
-}
+};
 
 type River = {
   id: number;
@@ -97,4 +97,9 @@ type ClimateData = {
   deleted_at: null | string;
 };
 
-export type { River, RainfallData, User, WaterLevelData, ClimateData};
+type Pagination = {
+  limit: number;
+  page: number;
+};
+
+export type { River, RainfallData, User, WaterLevelData, ClimateData, Pagination };
