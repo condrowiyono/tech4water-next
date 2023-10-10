@@ -34,8 +34,12 @@ const Table = (props: TableProps<User>) => {
       dataIndex: "id",
       render: (id) => (
         <Space>
-          <Button>Edit</Button>
-          <Button>Hapus</Button>
+          <Button size="small" disabled>
+            Edit
+          </Button>
+          <Button size="small" disabled>
+            Hapus
+          </Button>
         </Space>
       ),
     },

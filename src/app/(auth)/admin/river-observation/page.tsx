@@ -22,7 +22,7 @@ const RiverObservationPage = async ({ searchParams }: { searchParams: SearchPara
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
       <Card title="Pencarian">
-        <Filter />
+        <Filter initialValues={searchParams} />
       </Card>
       <Card title="Hasil">
         <Table

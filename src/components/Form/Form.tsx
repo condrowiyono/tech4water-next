@@ -150,10 +150,10 @@ const Form = <T extends Record<string, any>>({
 
       <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", flexWrap: "wrap" }}>
         <Button loading={loading} htmlType="reset" {...resetButtonProps}>
-          {resetText ?? "Reset"}
+          {resetText ?? "Hapus Filter"}
         </Button>
         <Button type="primary" loading={loading} htmlType="submit" {...submitButtonProps}>
-          {submitText ?? "Submit"}
+          {submitText ?? "Kirim"}
         </Button>
       </div>
     </BaseForm>

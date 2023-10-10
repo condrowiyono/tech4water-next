@@ -1,4 +1,4 @@
-import { Card, Space } from "antd";
+import { Button, Card, Space } from "antd";
 import Link from "next/link";
 import { River } from "@/interfaces";
 
@@ -15,10 +15,11 @@ const RiverCard = (props: River) => {
     <Card>
       <Space direction="vertical">
         <div className="text-xl font-bold">{name}</div>
-        <div className="text-lg">({type})</div>
         <div className="font-bold">KAB/KOTA: {city || "-"}</div>
 
-        <Link href={`${mapHref.get(type)}/${id}`}>Input Data</Link>
+        <Link href={`${mapHref.get(type)}/${id}`}>
+          <Button type="primary">Input Data</Button>
+        </Link>
       </Space>
     </Card>
   );

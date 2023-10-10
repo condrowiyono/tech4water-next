@@ -28,7 +28,7 @@ export interface ResponseError {
 export interface ErrorResponse extends AxiosError<ResponseError> {}
 
 export const instance = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 const fetcher = async <T, D = any>(requestConfig: RawAxiosRequestConfig<D>) => {
