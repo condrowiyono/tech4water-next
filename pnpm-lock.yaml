@@ -38,6 +38,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
+  react-image-file-resizer:
+    specifier: ^0.4.8
+    version: 0.4.8
   universal-cookie:
     specifier: ^6.1.1
     version: 6.1.1
@@ -3088,6 +3091,10 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-image-file-resizer@0.4.8:
+    resolution: {integrity: sha512-Ue7CfKnSlsfJ//SKzxNMz8avDgDSpWQDOnTKOp/GNRFJv4dO9L5YGHNEnj40peWkXXAK2OK0eRIoXhOYpUzUTQ==}
     dev: false
 
   /react-is@16.13.1:

@@ -9,6 +9,7 @@ import { WaterLevelData } from "@/interfaces";
 import { useEffect, useState } from "react";
 import { defaultTimezone, setTimeToDate } from "@/utils/dayjs";
 import Detail from "./detail";
+import Upload from "@/components/Upload";
 
 const PAGI = 7;
 const SIANG = 12;
@@ -81,6 +82,7 @@ const InputForm = ({ value }: InputFormProps) => {
   return (
     <>
       <Segmented value={segment} onChange={setSegment} block options={["Pagi", "Siang", "Sore"]} className="mb-2" />
+
       {map.get(segment) ? (
         <Space direction="vertical" className="w-full">
           <div className="text-xl">Data Hari Ini</div>
@@ -114,6 +116,9 @@ const InputForm = ({ value }: InputFormProps) => {
                 { label: "Banjir dan Longsor", value: "banjir-longsor" },
               ]}
             />
+          </Form.Item>
+          <Form.Item label="Unggah Gambar" name="image">
+            <Upload filename={`tma-${id}`} />
           </Form.Item>
           <Button loading={loading} block type="primary" htmlType="submit">
             Simpan

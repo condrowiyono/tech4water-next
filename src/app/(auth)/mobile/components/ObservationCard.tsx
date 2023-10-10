@@ -7,12 +7,12 @@ export type ObservationCardProps = {
   color: string;
   total: number;
   manual: number;
-  telemetric: number;
+  telemetry: number;
   href?: string;
 };
 
 const ObservationCard = (props: ObservationCardProps) => {
-  const { title, icon, color, total, href, manual, telemetric } = props;
+  const { title, icon, color, total, href, manual, telemetry } = props;
 
   return (
     <Link
@@ -20,8 +20,8 @@ const ObservationCard = (props: ObservationCardProps) => {
       className={`rounded-lg no-underline text-white shadow-lg p-4 mx-auto w-full ${color} hover:opacity-80`}
     >
       <Image src={icon} width={120} height={120} style={{ width: "100%", height: "auto" }} alt={title} />
+      <div className="text-center text-4xl font-bold">{total}</div>
       <div className="text-center font-bold">{title}</div>
-      <div className="text-center text-xl font-bold">{total}</div>
       <div className="my-4 border-t border-white border-solid"></div>
       <div className="grid grid-cols-1 gap-2">
         <div className="text-center">
@@ -29,7 +29,7 @@ const ObservationCard = (props: ObservationCardProps) => {
           <div className="text-sm">Manual</div>
         </div>
         <div className="text-center">
-          <div className=" font-bold text-lg">{telemetric}</div>
+          <div className=" font-bold text-lg">{telemetry}</div>
           <div className="text-sm">Telemetric</div>
         </div>
       </div>

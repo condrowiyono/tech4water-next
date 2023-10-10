@@ -10,7 +10,6 @@ type SearchParamsType = Pick<River & Pagination, "name" | "type" | "limit" | "pa
 
 const RiverObservationPage = async ({ searchParams }: { searchParams: SearchParamsType }) => {
   const session = await getServerSession(authOptions);
-
   const data = await fetcher<River[]>({
     url: "/admin/rivers",
     params: searchParams,
@@ -21,7 +20,7 @@ const RiverObservationPage = async ({ searchParams }: { searchParams: SearchPara
 
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
-      <Card title="Pencarian">
+      <Card title="Daftar Pos">
         <Filter initialValues={searchParams} />
       </Card>
       <Card title="Hasil">

@@ -1,17 +1,18 @@
 "use client";
 
-import { Form, DatePicker, InputNumber, Select, Button, notification } from "antd";
+import { Form, DatePicker, InputNumber, Select, Button, notification, Alert } from "antd";
 import dayjs from "dayjs";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
 import { RainfallData } from "@/interfaces";
+import Upload from "@/components/Upload";
 
 const save = (data: Partial<RainfallData>) => {
   return fetcher({ url: "/mobile/rainfalls", method: "POST", data });
 };
 
-const InputForm = ({ value }: { value: RainfallData }) => {
+const InputForm = () => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
@@ -34,7 +35,7 @@ const InputForm = ({ value }: { value: RainfallData }) => {
   };
 
   return (
-    <Form initialValues={{ date: dayjs() }} disabled={!!value} onFinish={handleFinish} layout="vertical">
+    <Form initialValues={{ date: dayjs() }} onFinish={handleFinish} layout="vertical">
       <Form.Item label="Tanngal" name="date">
         <DatePicker disabled />
       </Form.Item>
@@ -63,6 +64,9 @@ const InputForm = ({ value }: { value: RainfallData }) => {
             { label: "Banjir dan Longsor", value: "banjir-longsor" },
           ]}
         />
+      </Form.Item>
+      <Form.Item label="Unggah Gambar" name="image">
+        <Upload filename={`pch-${id}`} />
       </Form.Item>
       <Button loading={loading} block type="primary" htmlType="submit">
         Simpan

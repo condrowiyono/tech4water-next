@@ -6,12 +6,13 @@ import { useRequest } from "ahooks";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useParams, useRouter } from "next/navigation";
 import { ClimateData } from "@/interfaces";
+import Upload from "@/components/Upload";
 
 const save = (data: Partial<ClimateData>) => {
   return fetcher({ url: "/mobile/climates", method: "POST", data });
 };
 
-const InputForm = ({ value }: { value: ClimateData }) => {
+const InputForm = () => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
@@ -39,7 +40,6 @@ const InputForm = ({ value }: { value: ClimateData }) => {
 
   return (
     <Form onFinish={handleFinish} initialValues={{ date: dayjs() }} layout="vertical">
-      {value && <Alert type="success" message="Data sudah diinput" />}
       <Form.Item label="Tanngal" name="date">
         <DatePicker disabled />
       </Form.Item>
@@ -115,7 +115,9 @@ const InputForm = ({ value }: { value: ClimateData }) => {
       <Form.Item label="Durasi Penyinaran Matahari" name="illumination_duration">
         <InputNumber placeholder="Durasi Penyinaran Matahari" style={{ width: "100%" }} />
       </Form.Item>
-
+      <Form.Item label="Unggah Gambar" name="image">
+        <Upload filename={`tma-${id}`} />
+      </Form.Item>
       <Button loading={loading} block type="primary" htmlType="submit">
         Simpan
       </Button>

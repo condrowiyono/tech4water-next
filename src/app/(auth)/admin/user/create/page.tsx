@@ -16,9 +16,7 @@ const Create = () => {
 
   const { loading, data } = useRequest(
     () => fetcher<River[]>({ url: "/admin/rivers", params: { name }, headers: { Authorization: `Bearer ${token}` } }),
-    {
-      refreshDeps: [token, name],
-    }
+    { refreshDeps: [token, name] }
   );
 
   const { loading: mutationLoading, run } = useRequest(
@@ -39,10 +37,6 @@ const Create = () => {
       },
     }
   );
-
-  const handleSubmit = (values: Partial<User>) => {
-    run(values);
-  };
 
   const schema: FormSchema<User>[] = [
     {
@@ -95,7 +89,7 @@ const Create = () => {
         schema={schema}
         labelCol={{ xs: 24, sm: 4 }}
         wrapperCol={{ xs: 24, sm: 12 }}
-        onSubmit={handleSubmit}
+        onSubmit={run}
       />
     </Card>
   );

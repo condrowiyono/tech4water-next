@@ -1,7 +1,7 @@
 "use client";
 
 import { PropsWithChildren } from "react";
-import { Layout as BaseLayout, Button, Dropdown, Menu } from "antd";
+import { Layout as BaseLayout, Button, Menu } from "antd";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";

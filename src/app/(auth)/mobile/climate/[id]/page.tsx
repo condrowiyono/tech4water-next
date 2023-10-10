@@ -46,7 +46,7 @@ const ClimateDetailPage = async ({ params }: ClimateDetailPageProps) => {
           <Detail value={data} />
         </Space>
       ) : (
-        <InputForm value={data} />
+        <InputForm />
       )}
     </>
   );

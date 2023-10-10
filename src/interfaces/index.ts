@@ -100,9 +100,21 @@ type ClimateData = {
   deleted_at: null | string;
 };
 
+type CountType = {
+  total?: number;
+  manual?: number;
+  telemetry?: number;
+};
+
+type RiverCountType = {
+  pch?: CountType;
+  tma?: CountType;
+  iklim?: CountType;
+};
+
 type Pagination = {
   limit: number;
   page: number;
 };
 
-export type { River, RainfallData, User, WaterLevelData, ClimateData, Pagination };
+export type { River, RainfallData, User, WaterLevelData, ClimateData, Pagination, RiverCountType };

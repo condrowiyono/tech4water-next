@@ -1,36 +1,40 @@
+import fetcher from "@/utils/fetcher";
 import ObservationCard, { ObservationCardProps } from "./components/ObservationCard";
+import { RiverCountType } from "@/interfaces";
 
-const observationCard: ObservationCardProps[] = [
-  {
-    title: "Curah Hujan",
-    icon: "/image/rainfall.png",
-    color: "bg-green-600",
-    total: 100,
-    manual: 50,
-    telemetric: 50,
-    href: "/mobile/rainfall",
-  },
-  {
-    title: "Duga Air",
-    icon: "/image/waterlevel.png",
-    color: "bg-blue-600",
-    total: 100,
-    manual: 50,
-    telemetric: 50,
-    href: "/mobile/waterlevel",
-  },
-  {
-    title: "Klimatologi",
-    icon: "/image/climate.png",
-    color: "bg-red-500",
-    total: 100,
-    manual: 50,
-    telemetric: 50,
-    href: "/mobile/climate",
-  },
-];
+const Page = async () => {
+  const riverCount = await fetcher<RiverCountType>({ url: "/rivers-count" });
 
-const Page = () => {
+  const observationCard: ObservationCardProps[] = [
+    {
+      title: "Curah Hujan",
+      icon: "/image/rainfall.png",
+      color: "bg-green-600",
+      total: riverCount.data.pch?.total || 0,
+      manual: riverCount.data.pch?.manual || 0,
+      telemetry: riverCount.data.pch?.telemetry || 0,
+      href: "/mobile/rainfall",
+    },
+    {
+      title: "Duga Air",
+      icon: "/image/waterlevel.png",
+      color: "bg-blue-600",
+      total: riverCount.data.tma?.total || 0,
+      manual: riverCount.data.tma?.manual || 0,
+      telemetry: riverCount.data.tma?.telemetry || 0,
+      href: "/mobile/waterlevel",
+    },
+    {
+      title: "Klimatologi",
+      icon: "/image/climate.png",
+      color: "bg-red-500",
+      total: riverCount.data.iklim?.total || 0,
+      manual: riverCount.data.iklim?.manual || 0,
+      telemetry: riverCount.data.iklim?.telemetry || 0,
+      href: "/mobile/climate",
+    },
+  ];
+
   return (
     <div>
       <div className="mb-4">

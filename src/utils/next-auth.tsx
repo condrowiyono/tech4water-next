@@ -3,12 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
   theme: {
+    colorScheme: "light",
     logo: "/image/pu.png",
     buttonText: "Masuk",
   },
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "Email",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Email" },
         password: { label: "Password", type: "password", placeholder: "Kata Sandi" },
@@ -17,7 +18,6 @@ export const authOptions: AuthOptions = {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
           method: "POST",
           body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" },
         });
 
         const user = await res.json();

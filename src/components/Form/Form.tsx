@@ -18,13 +18,11 @@ import { CheckboxGroupProps } from "antd/es/checkbox";
 import { SearchProps, TextAreaProps } from "antd/es/input";
 
 import { buildRules } from "./utils";
-import LabelWithTooltip from "./LabelWithTooltip";
 
 type BaseFormSchema<T = any> = {
   label: string;
   name: keyof T;
   key?: string;
-  tooltip?: string;
   placeholder?: string;
   required?: boolean;
   autoFocus?: boolean;
@@ -94,7 +92,7 @@ const renderFormItemInput = <T extends Record<string, any>>(item: FormSchema<T>)
 };
 
 const renderFormItem = <T extends Record<string, any>>(item: FormSchema<T>) => {
-  const { label, name, tooltip, required, key, itemProps } = item;
+  const { label, name, required, key, itemProps } = item;
 
   const itemName: NamePath = typeof name === "symbol" ? name.toString() : name;
   const rules = buildRules(item);
@@ -105,7 +103,7 @@ const renderFormItem = <T extends Record<string, any>>(item: FormSchema<T>) => {
       name={itemName}
       required={required}
       rules={rules}
-      label={tooltip ? <LabelWithTooltip title={tooltip} label={label} /> : label}
+      label={label}
       {...itemProps}
     >
       {renderFormItemInput(item)}

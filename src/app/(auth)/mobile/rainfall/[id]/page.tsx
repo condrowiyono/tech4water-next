@@ -46,7 +46,7 @@ const RainfallDetailPage = async ({ params }: RainfallDetailPageProps) => {
           <Detail value={data.data} />
         </Space>
       ) : (
-        <InputForm value={data.data} />
+        <InputForm />
       )}
     </>
   );
