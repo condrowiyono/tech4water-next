@@ -1,9 +1,7 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { setCookie } from "./cookies";
 
 export const authOptions: AuthOptions = {
-  secret: "sakral sekali ini secret nya",
   theme: {
     logo: "/image/pu.png",
     buttonText: "Masuk",
@@ -16,17 +14,15 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password", placeholder: "Kata Sandi" },
       },
       async authorize(credentials) {
-        const res = await fetch("https://water.orbitallabs.net/login", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
+
         const user = await res.json();
 
         if (res.ok && user) {
-          // set additional cookies
-          console.log(user.data.token);
-
           return {
             ...user.data.user,
             token: user.data.token,
@@ -39,15 +35,19 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        // @ts-ignore
         token.accessToken = user.token;
+        token.river_id = user.river_id || undefined;
+        token.river_type = user.river_type || undefined;
       }
+
       return token;
     },
 
     async session({ session, token }) {
-      // @ts-ignore
-      session.accessToken = token.accessToken;
+      session.accessToken = token.accessToken as string;
+      session.river_id = token.river_id as number;
+      session.river_type = token.river_type as string;
+
       return session;
     },
   },

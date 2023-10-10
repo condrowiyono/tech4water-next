@@ -19,14 +19,7 @@ const ObservationCard = (props: ObservationCardProps) => {
       href={href || "#"}
       className={`rounded-lg no-underline text-white shadow-lg p-4 mx-auto w-full ${color} hover:opacity-80`}
     >
-      <Image
-        src={icon}
-        width={120}
-        height={120}
-        style={{ width: "100%", height: "auto" }}
-        objectFit="contain"
-        alt={title}
-      />
+      <Image src={icon} width={120} height={120} style={{ width: "100%", height: "auto" }} alt={title} />
       <div className="text-center font-bold">{title}</div>
       <div className="text-center text-xl font-bold">{total}</div>
       <div className="my-4 border-t border-white border-solid"></div>

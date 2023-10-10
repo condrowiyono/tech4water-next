@@ -44,6 +44,10 @@ const Layout = ({ children }: PropsWithChildren) => {
                 label: "Daftar Pos ",
                 key: "/admin/river-observation",
               },
+              {
+                label: "Daftar User",
+                key: "/admin/user",
+              },
             ]}
           />
         </BaseLayout.Sider>

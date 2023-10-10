@@ -4,6 +4,9 @@ type User = {
   password: string;
   name: string;
   is_verified: null | boolean;
+  role: "admin" | "user" | "operator";
+  river_id?: null | number;
+  river?: River;
   created_at: string;
   updated_at: string;
   deleted_at: null | string;

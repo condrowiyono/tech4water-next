@@ -1,5 +1,3 @@
-import { getToken } from "next-auth/jwt";
-
 import type { AxiosError, RawAxiosRequestConfig } from "axios";
 import axios from "axios";
 
@@ -34,24 +32,7 @@ export const instance = axios.create({
 });
 
 const fetcher = async <T, D = any>(requestConfig: RawAxiosRequestConfig<D>) => {
-  console.log(requestConfig);
   try {
-    instance.interceptors.request.use(
-      async (config) => {
-        try {
-          // const session = await getSession();
-          // const token = session?.accessToken;
-
-          // if (token && config.headers) config.headers["Authorization"] = `Bearer ${token}`;
-          return config;
-        } catch (err) {
-          console.log(err);
-          return config;
-        }
-      },
-      (error) => Promise.reject(error)
-    );
-
     const { data } = await instance.request<Response<T>>(requestConfig);
     return Promise.resolve(data);
   } catch (err) {

@@ -1,6 +1,4 @@
-import ObservationCard, {
-  ObservationCardProps,
-} from "./components/ObservationCard";
+import ObservationCard, { ObservationCardProps } from "./components/ObservationCard";
 
 const observationCard: ObservationCardProps[] = [
   {
@@ -31,6 +29,7 @@ const observationCard: ObservationCardProps[] = [
     href: "/mobile/climate",
   },
 ];
+
 const Page = () => {
   return (
     <div>
