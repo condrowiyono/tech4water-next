@@ -11,7 +11,9 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req });
 
   if (!token) {
-    return NextResponse.redirect(new URL("/api/auth/signin", req.url));
+    const callback = req.url;
+    console.log("callback", callback);
+    return NextResponse.redirect(new URL(`/api/auth/signin?callbackUrl=${callback}`, req.url));
   }
 
   if (req.nextUrl.pathname === "/mobile" && token.river_type && token.river_id) {

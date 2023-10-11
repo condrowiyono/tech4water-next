@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { defaultTimezone, setTimeToDate } from "@/utils/dayjs";
 import Detail from "./detail";
 import Upload from "@/components/Upload";
+import { useSession } from "next-auth/react";
 
 const PAGI = 7;
 const SIANG = 12;
@@ -19,29 +20,36 @@ type InputFormProps = {
   value?: Partial<WaterLevelData>[];
 };
 
-const save = (data: Partial<WaterLevelData>) => {
-  return fetcher({ url: "/mobile/waterlevels", method: "POST", data });
-};
-
 const InputForm = ({ value }: InputFormProps) => {
+  const token = useSession().data?.accessToken;
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const [segment, setSegment] = useState<string | number>("Pagi");
 
   const [form] = Form.useForm();
 
-  const { run, loading } = useRequest(save, {
-    manual: true,
-    onFinally: router.refresh,
-    onSuccess: () => notification.success({ message: "Sukses Menyimpan Data" }),
-    onError: (err) => {
-      const error = err as ErrorResponse;
-      notification.error({
-        message: "Gagal Menyimpan Data",
-        description: error.response?.data.errors,
+  const { run, loading } = useRequest(
+    (data: Partial<WaterLevelData>) => {
+      return fetcher({
+        url: "/mobile/waterlevels",
+        method: "POST",
+        data,
+        headers: { Authorization: `Bearer ${token}` },
       });
     },
-  });
+    {
+      manual: true,
+      onFinally: router.refresh,
+      onSuccess: () => notification.success({ message: "Sukses Menyimpan Data" }),
+      onError: (err) => {
+        const error = err as ErrorResponse;
+        notification.error({
+          message: "Gagal Menyimpan Data",
+          description: error.response?.data.errors,
+        });
+      },
+    }
+  );
 
   const handleFinish = (data: Partial<WaterLevelData>) => {
     const { date, ...rest } = data;

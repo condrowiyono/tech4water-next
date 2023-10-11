@@ -7,27 +7,30 @@ import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
 import { RainfallData } from "@/interfaces";
 import Upload from "@/components/Upload";
-
-const save = (data: Partial<RainfallData>) => {
-  return fetcher({ url: "/mobile/rainfalls", method: "POST", data });
-};
+import { useSession } from "next-auth/react";
 
 const InputForm = () => {
+  const token = useSession().data?.accessToken;
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
-  const { run, loading } = useRequest(save, {
-    manual: true,
-    onFinally: router.refresh,
-    onSuccess: () => notification.success({ message: "Sukses Menyimpan Data" }),
-    onError: (err) => {
-      const error = err as ErrorResponse;
-      notification.error({
-        message: "Gagal Menyimpan Data",
-        description: error.response?.data.errors,
-      });
+  const { run, loading } = useRequest(
+    (data: Partial<RainfallData>) => {
+      return fetcher({ url: "/mobile/rainfalls", method: "POST", data, headers: { Authorization: `Bearer ${token}` } });
     },
-  });
+    {
+      manual: true,
+      onFinally: router.refresh,
+      onSuccess: () => notification.success({ message: "Sukses Menyimpan Data" }),
+      onError: (err) => {
+        const error = err as ErrorResponse;
+        notification.error({
+          message: "Gagal Menyimpan Data",
+          description: error.response?.data.errors,
+        });
+      },
+    }
+  );
 
   const handleFinish = (data: Partial<RainfallData>) => {
     const { date, ...rest } = data;
