@@ -11,8 +11,9 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req });
 
   if (!token) {
-    const callback = req.url;
-    console.log("callback", callback);
+    const host = process.env.NEXTAUTH_URL;
+    const pathname = req.nextUrl.pathname;
+    const callback = new URL(pathname, host).href;
     return NextResponse.redirect(new URL(`/api/auth/signin?callbackUrl=${callback}`, req.url));
   }
 
