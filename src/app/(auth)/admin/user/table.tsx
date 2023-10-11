@@ -4,7 +4,7 @@ import { Table as AntdTable, TableProps, TablePaginationConfig, Space, Button } 
 import qs from "query-string";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { User } from "@/interfaces";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import Link from "next/link";
 
 const Table = (props: TableProps<User>) => {
   const router = useRouter();
@@ -34,9 +34,9 @@ const Table = (props: TableProps<User>) => {
       dataIndex: "id",
       render: (id) => (
         <Space>
-          <Button size="small" disabled>
-            Edit
-          </Button>
+          <Link href={`/admin/user/${id}/edit`}>
+            <Button size="small">Edit</Button>
+          </Link>
           <Button size="small" disabled>
             Hapus
           </Button>

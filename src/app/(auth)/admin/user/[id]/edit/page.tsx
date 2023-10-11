@@ -1,19 +1,27 @@
 "use client";
 
 import { useRequest } from "ahooks";
-import UserForm from "../(component)/form";
+import UserForm from "../../(component)/form";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { User } from "@/interfaces";
-import { notification } from "antd";
+import { Form, notification } from "antd";
 import router from "next/router";
 import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
 
-const Create = () => {
+const Edit = () => {
   const token = useSession().data?.accessToken;
+  const { id } = useParams<{ id: string }>();
+  const [form] = Form.useForm<User>();
+
+  const { loading } = useRequest(
+    () => fetcher<User>({ url: `/admin/users/${id}`, headers: { Authorization: `Bearer ${token}` } }),
+    { refreshDeps: [token, id], onSuccess: (data) => form.setFieldsValue(data.data) }
+  );
 
   const { loading: mutationLoading, run } = useRequest(
     (data) =>
-      fetcher<User>({ url: "/admin/users", method: "POST", data, headers: { Authorization: `Bearer ${token}` } }),
+      fetcher<User>({ url: `/admin/users/${id}`, method: "PUT", data, headers: { Authorization: `Bearer ${token}` } }),
     {
       manual: true,
       onSuccess: () => {
@@ -30,7 +38,7 @@ const Create = () => {
     }
   );
 
-  return <UserForm onFinish={run} loading={mutationLoading} />;
+  return <UserForm form={form} onFinish={run} loading={mutationLoading || loading} />;
 };
 
-export default Create;
+export default Edit;

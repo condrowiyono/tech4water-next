@@ -65,9 +65,7 @@ const Table = (props: TableProps<River>) => {
             <Button size="small">Detail</Button>
           </Link>
           <Link href={`/admin/river-observation/${id}/edit`}>
-            <Button disabled size="small">
-              Edit
-            </Button>
+            <Button size="small">Edit</Button>
           </Link>
           <Button disabled size="small" danger icon={<DeleteOutlined />} />
           <Button onClick={() => handleShowDownload(record)} icon={<FileExcelOutlined />} size="small" type="primary">

@@ -1,10 +1,11 @@
 import fetcher from "@/utils/fetcher";
 import { River, Pagination } from "@/interfaces";
-import { Card, Space } from "antd";
+import { Button, Card, Space } from "antd";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/next-auth";
 import Table from "./table";
 import Filter from "./filter";
+import Link from "next/link";
 
 type SearchParamsType = Pick<River & Pagination, "name" | "type" | "limit" | "page">;
 
@@ -23,7 +24,14 @@ const RiverObservationPage = async ({ searchParams }: { searchParams: SearchPara
       <Card title="Daftar Pos">
         <Filter initialValues={searchParams} />
       </Card>
-      <Card title="Hasil">
+      <Card
+        title="Hasil Pencarian"
+        extra={
+          <Link href="/admin/river-observation/create">
+            <Button type="primary">Buat Baru</Button>
+          </Link>
+        }
+      >
         <Table
           rowKey="id"
           dataSource={data.data}
@@ -38,4 +46,5 @@ const RiverObservationPage = async ({ searchParams }: { searchParams: SearchPara
   );
 };
 
+export const dynamic = "force-dynamic";
 export default RiverObservationPage;

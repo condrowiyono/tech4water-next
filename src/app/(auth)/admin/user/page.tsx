@@ -47,4 +47,5 @@ const UserPage = async ({ searchParams }: { searchParams: SearchParamsType }) =>
   );
 };
 
+export const dynamic = "force-dynamic";
 export default UserPage;

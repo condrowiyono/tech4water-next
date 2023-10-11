@@ -1,12 +1,12 @@
 import type { AxiosError, RawAxiosRequestConfig } from "axios";
 import axios from "axios";
 
-export interface PayloadList {
+type PayloadList = {
   page?: number;
   limit?: number;
-}
+};
 
-export interface Response<T = any> {
+export type Response<T = any> = {
   errors?: string[];
   message: string;
   code: number;
@@ -16,16 +16,16 @@ export interface Response<T = any> {
     limit: number;
     total: number;
   };
-}
+};
 
-export interface ResponseError {
+export type ResponseError = {
   errors?: string[];
   message: string;
   error_code: number;
   code: number;
-}
+};
 
-export interface ErrorResponse extends AxiosError<ResponseError> {}
+export type ErrorResponse = AxiosError<ResponseError>;
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

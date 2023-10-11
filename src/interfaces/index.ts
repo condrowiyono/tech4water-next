@@ -1,4 +1,4 @@
-type User = {
+export type User = {
   id: number;
   email: string;
   password: string;
@@ -12,7 +12,7 @@ type User = {
   deleted_at: null | string;
 };
 
-type River = {
+export type River = {
   id: number;
   name: string;
   type: string;
@@ -40,7 +40,7 @@ type River = {
   deleted_at: null | string;
 };
 
-type RainfallData = {
+export type RainfallData = {
   id: number;
   river_id: number;
   river: null | string;
@@ -57,7 +57,7 @@ type RainfallData = {
   deleted_at: null | string;
 };
 
-type WaterLevelData = {
+export type WaterLevelData = {
   id: number;
   river_id: number;
   river: null | string;
@@ -73,7 +73,7 @@ type WaterLevelData = {
   deleted_at: null | string;
 };
 
-type ClimateData = {
+export type ClimateData = {
   id: number;
   river_id: number;
   river: null | string;
@@ -100,21 +100,19 @@ type ClimateData = {
   deleted_at: null | string;
 };
 
-type CountType = {
+export type CountType = {
   total?: number;
   manual?: number;
   telemetry?: number;
 };
 
-type RiverCountType = {
+export type RiverCountType = {
   pch?: CountType;
   tma?: CountType;
   iklim?: CountType;
 };
 
-type Pagination = {
+export type Pagination = {
   limit: number;
   page: number;
 };
-
-export type { River, RainfallData, User, WaterLevelData, ClimateData, Pagination, RiverCountType };

@@ -141,9 +141,10 @@ const Form = <T extends Record<string, any>>({
   ...rest
 }: FormType<T>) => {
   const formLayout = gridCols ? "vertical" : layout;
+  const handleReset = () => form?.resetFields();
 
   return (
-    <BaseForm layout={formLayout} form={form} onFinish={onSubmit} {...rest}>
+    <BaseForm layout={formLayout} form={form} onReset={handleReset} onFinish={onSubmit} {...rest}>
       {gridCols ? renderFormItemInGrid(schema, gridCols) : renderFormItemInChildren(schema)}
 
       <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", flexWrap: "wrap" }}>

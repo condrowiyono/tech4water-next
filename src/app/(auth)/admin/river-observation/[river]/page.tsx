@@ -54,4 +54,5 @@ const RiverDetail = async ({ params }: { params: ParamsType }) => {
   );
 };
 
+export const dynamic = "force-dynamic";
 export default RiverDetail;

@@ -16,7 +16,7 @@ type UploadResponse = {
   filename: string;
 };
 
-export default function Upload(props: CustomUploadProps) {
+const Upload = (props: CustomUploadProps) => {
   const [progress, setProgress] = useState({ percent: 0 });
   const [value, setValue] = usePropsValue({
     defaultValue: props.defaultValue || "",
@@ -72,4 +72,6 @@ export default function Upload(props: CustomUploadProps) {
       <div className="text-gray-500">{value || ""}</div>
     </>
   );
-}
+};
+
+export default Upload;
