@@ -4,7 +4,7 @@ import { Form, notification } from "antd";
 import { useRouter, usePathname, useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { River } from "@/interfaces";
-import RiverForm from "../../(component)/form";
+import RiverForm from "../../_components/form";
 import fetcher from "@/utils/fetcher";
 import { useRequest } from "ahooks";
 

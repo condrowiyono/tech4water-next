@@ -46,5 +46,5 @@ const RiverObservationPage = async ({ searchParams }: { searchParams: SearchPara
   );
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default RiverObservationPage;

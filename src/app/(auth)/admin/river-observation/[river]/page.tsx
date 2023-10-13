@@ -1,3 +1,4 @@
+import Map from "@/components/Map";
 import { River } from "@/interfaces";
 import fetcher from "@/utils/fetcher";
 import { authOptions } from "@/utils/next-auth";
@@ -11,9 +12,7 @@ const RiverDetail = async ({ params }: { params: ParamsType }) => {
 
   const data = await fetcher<River>({
     url: `/admin/rivers/${params.river}`,
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
   const items: CollapseProps["items"] = [
@@ -41,6 +40,35 @@ const RiverDetail = async ({ params }: { params: ParamsType }) => {
       ),
     },
     {
+      key: "map",
+      label: "Peta",
+      children: (
+        <div>
+          {data.data.latitude && data.data.longitude ? (
+            <Map
+              width={600}
+              height={300}
+              markers={[{ position: [data.data.latitude, data.data.longitude], popup: data.data.name }]}
+              center={[data.data.latitude, data.data.longitude]}
+              zoom={12}
+            />
+          ) : (
+            <p>Pos tidak memiliki data koordinat</p>
+          )}
+          <div>
+            Link Google Maps:
+            <a
+              href={`https://maps.google.com/?q=${data.data.latitude},${data.data.longitude}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {`https://maps.google.com/?q=${data.data.latitude},${data.data.longitude}`}
+            </a>
+          </div>
+        </div>
+      ),
+    },
+    {
       key: "condition",
       label: "Kondisi Pos Hidrologi",
       children: <p></p>,
@@ -48,11 +76,12 @@ const RiverDetail = async ({ params }: { params: ParamsType }) => {
   ];
 
   return (
-    <Card title="Data Pos Hidrologi">
-      <Collapse items={items} defaultActiveKey={["detail"]} />
-    </Card>
+    <>
+      <Card title="Data Pos Hidrologi">
+        <Collapse items={items} defaultActiveKey={["detail"]} />
+      </Card>
+    </>
   );
 };
 
-export const dynamic = "force-dynamic";
 export default RiverDetail;

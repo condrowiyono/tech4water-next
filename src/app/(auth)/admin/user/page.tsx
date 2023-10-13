@@ -47,5 +47,5 @@ const UserPage = async ({ searchParams }: { searchParams: SearchParamsType }) =>
   );
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default UserPage;

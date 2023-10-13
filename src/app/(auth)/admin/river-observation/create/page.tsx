@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import RiverForm from "../(component)/form";
+import RiverForm from "../_components/form";
 import { River } from "@/interfaces";
 import fetcher from "@/utils/fetcher";
 import { useRequest } from "ahooks";

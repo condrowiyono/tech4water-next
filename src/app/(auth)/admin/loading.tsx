@@ -2,7 +2,7 @@ import { Spin } from "antd";
 
 const Loading = () => {
   return (
-    <div className="text-center">
+    <div className="flex items-center justify-center h-screen w-full">
       <Spin spinning />
     </div>
   );

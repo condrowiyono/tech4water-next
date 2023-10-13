@@ -1,9 +1,14 @@
 import fetcher from "@/utils/fetcher";
 import ObservationCard, { ObservationCardProps } from "../mobile/components/ObservationCard";
-import { RiverCountType } from "@/interfaces";
+import { River, RiverCountType } from "@/interfaces";
+import { Card, Col, Row, Space } from "antd";
+import Meta from "antd/lib/card/Meta";
+import Map from "@/components/Map";
+import Link from "next/link";
 
 const Page = async () => {
   const riverCount = await fetcher<RiverCountType>({ url: "/rivers-count" });
+  const rivers = await fetcher<River[]>({ url: "/rivers" });
 
   const observationCard: ObservationCardProps[] = [
     {
@@ -36,18 +41,52 @@ const Page = async () => {
   ];
 
   return (
-    <div>
-      <div className="mb-4">
-        <h1>Dashboard</h1>
-        <h2>Hidrologi</h2>
-      </div>
-      <div className="grid grid-cols-3 sm:grid-cols-5  gap-2">
+    <>
+      <Row gutter={[16, 16]}>
+        <Col sm={24} lg={18}>
+          <Card hoverable>
+            <Map
+              height={200}
+              width={400}
+              // markers={rivers.data.map((river) => ({
+              //   position: [river.latitude, river.longitude],
+              //   popup: river.name,
+              // }))}
+              search={{
+                data: rivers.data
+                  ? rivers.data.map((river) => ({
+                      position: [river.latitude, river.longitude],
+                      title: river.name,
+                    }))
+                  : [],
+              }}
+              center={[3.3166, 117.5895]}
+              zoom={8}
+            />
+          </Card>
+        </Col>
+        <Col sm={24} span={4}></Col>
         {observationCard.map((item, index) => (
-          <ObservationCard key={index} {...item} />
+          <Col xs={12} lg={6} key={index}>
+            <Card hoverable cover={<img alt="example" src={item.icon} />}>
+              <Link href={item.href || "#"}>
+                <Meta
+                  title={item.title}
+                  description={
+                    <>
+                      <strong>Total: {item.total || item.manual + item.telemetry}</strong> |
+                      <strong> Manual: {item.manual}</strong> |<strong> Telemetry: {item.telemetry}</strong>
+                    </>
+                  }
+                />
+              </Link>
+            </Card>
+          </Col>
         ))}
-      </div>
-    </div>
+      </Row>
+    </>
   );
 };
 
+export const revalidate = 0;
 export default Page;
