@@ -10,8 +10,10 @@ import fetcher from "@/utils/fetcher";
 
 type UserFormProps = FormProps<User> & {
   loading?: boolean;
+  mode?: "create" | "edit";
 };
-const UserForm = ({ loading, ...props }: UserFormProps) => {
+
+const UserForm = ({ loading, mode = "create", ...props }: UserFormProps) => {
   const token = useSession().data?.accessToken;
   const [name, setName] = useState("");
 
@@ -29,7 +31,7 @@ const UserForm = ({ loading, ...props }: UserFormProps) => {
         <Form.Item name="name" label="Nama" rules={[{ required: true }]}>
           <Input placeholder="Nama" />
         </Form.Item>
-        <Form.Item name="password" label="Password">
+        <Form.Item name="password" label="Password" rules={[{ required: mode === "create" }]}>
           <Input placeholder="Password" />
         </Form.Item>
         <Form.Item name="user_type" label="Role" rules={[{ required: true }]}>

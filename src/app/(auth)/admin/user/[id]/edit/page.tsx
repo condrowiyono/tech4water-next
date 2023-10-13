@@ -38,7 +38,7 @@ const Edit = () => {
     }
   );
 
-  return <UserForm form={form} onFinish={run} loading={mutationLoading || loading} />;
+  return <UserForm form={form} mode="edit" onFinish={run} loading={mutationLoading || loading} />;
 };
 
 export default Edit;
