@@ -38,6 +38,7 @@ export const authOptions: AuthOptions = {
         token.accessToken = user.token;
         token.river_id = user.river_id || undefined;
         token.river_type = user.river_type || undefined;
+        token.user_type = user.user_type;
       }
 
       return token;
@@ -47,6 +48,7 @@ export const authOptions: AuthOptions = {
       session.accessToken = token.accessToken as string;
       session.river_id = token.river_id as number;
       session.river_type = token.river_type as string;
+      session.user_type = token.user_type as string;
 
       return session;
     },

@@ -1,15 +1,15 @@
 "use client";
 
 import { useRequest } from "ahooks";
-import UserForm from "../../(component)/form";
+import UserForm from "../../_components/form";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { User } from "@/interfaces";
 import { Form, notification } from "antd";
-import router from "next/router";
 import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const Edit = () => {
+  const router = useRouter();
   const token = useSession().data?.accessToken;
   const { id } = useParams<{ id: string }>();
   const [form] = Form.useForm<User>();

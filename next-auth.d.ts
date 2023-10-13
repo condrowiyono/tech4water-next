@@ -6,11 +6,13 @@ declare module "next-auth" {
     accessToken?: string;
     river_type?: string;
     river_id?: number;
+    user_type?: string;
   }
 
   interface User {
     river_type?: string;
     river_id?: number;
     token?: string;
+    user_type?: string;
   }
 }

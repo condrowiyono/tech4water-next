@@ -2,7 +2,7 @@
 
 import { River, User } from "@/interfaces";
 import { Button, Card, Form, FormProps, Input, Select } from "antd";
-import { Role } from "@/interfaces/enum";
+import { UserType } from "@/interfaces/enum";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRequest } from "ahooks";
@@ -26,14 +26,14 @@ const UserForm = ({ loading, ...props }: UserFormProps) => {
         <Form.Item name="email" label="Email" rules={[{ required: true, type: "email" }]}>
           <Input placeholder="Email" />
         </Form.Item>
-        <Form.Item name="name" label="Nama" rules={[{ required: true, type: "email" }]}>
+        <Form.Item name="name" label="Nama" rules={[{ required: true }]}>
           <Input placeholder="Nama" />
         </Form.Item>
-        <Form.Item name="password" label="Password" rules={[{ required: true, type: "email" }]}>
+        <Form.Item name="password" label="Password">
           <Input placeholder="Password" />
         </Form.Item>
-        <Form.Item name="role" label="Role" rules={[{ required: true, type: "email" }]}>
-          <Select placeholder="Role" options={Object.values(Role).map((role) => ({ label: role, value: role }))} />
+        <Form.Item name="user_type" label="Role" rules={[{ required: true }]}>
+          <Select placeholder="Role" options={Object.values(UserType).map((role) => ({ label: role, value: role }))} />
         </Form.Item>
         <Form.Item name="river_id" label="Pos">
           <Select

@@ -9,7 +9,7 @@ export enum RiverObservation {
   Telemetry = "telemetry",
 }
 
-export enum Role {
+export enum UserType {
   Admin = "admin",
   User = "user",
   Operator = "operator",

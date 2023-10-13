@@ -22,7 +22,7 @@ const Table = (props: TableProps<User>) => {
     },
     {
       title: "Role",
-      dataIndex: "roles",
+      dataIndex: "user_type",
     },
     {
       title: "Pos",

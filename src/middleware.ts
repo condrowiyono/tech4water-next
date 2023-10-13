@@ -17,6 +17,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(`/api/auth/signin?callbackUrl=${callback}`, req.url));
   }
 
+  if (req.nextUrl.pathname === "/admin" && token.user_type !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   if (req.nextUrl.pathname === "/mobile" && token.river_type && token.river_id) {
     return NextResponse.redirect(new URL(`${mapHref.get(token.river_type as string)}/${token.river_id}`, req.url));
   }
