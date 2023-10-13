@@ -32,7 +32,7 @@ const UserForm = ({ loading, mode = "create", ...props }: UserFormProps) => {
           <Input placeholder="Nama" />
         </Form.Item>
         <Form.Item name="password" label="Password" rules={[{ required: mode === "create" }]}>
-          <Input placeholder="Password" />
+          <Input.Password placeholder="Password" />
         </Form.Item>
         <Form.Item name="user_type" label="Role" rules={[{ required: true }]}>
           <Select placeholder="Role" options={Object.values(UserType).map((role) => ({ label: role, value: role }))} />
