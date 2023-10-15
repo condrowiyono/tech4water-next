@@ -1,3 +1,5 @@
+"use client";
+
 import fetcher from "@/utils/fetcher";
 import { ObservationCardProps } from "../mobile/_components/ObservationCard";
 import { River, RiverCountType } from "@/interfaces";
@@ -6,37 +8,39 @@ import Meta from "antd/lib/card/Meta";
 import Map from "@/components/Map";
 import Link from "next/link";
 import Clock from "./_components/clock";
+import { useRequest } from "ahooks";
 
-const Page = async () => {
-  const riverCount = await fetcher<RiverCountType>({ url: "/rivers-count" });
-  const rivers = await fetcher<River[]>({ url: "/rivers" });
+const Page = () => {
+  const { data: riverCount } = useRequest(() => fetcher<RiverCountType>({ url: "/rivers-count" }));
+
+  const { data: rivers } = useRequest(() => fetcher<River[]>({ url: "/rivers" }));
 
   const observationCard: ObservationCardProps[] = [
     {
       title: "Curah Hujan",
       icon: "/image/rainfall.png",
       color: "bg-green-600",
-      total: riverCount.data.pch?.total || 0,
-      manual: riverCount.data.pch?.manual || 0,
-      telemetry: riverCount.data.pch?.telemetry || 0,
+      total: riverCount?.data.pch?.total || 0,
+      manual: riverCount?.data.pch?.manual || 0,
+      telemetry: riverCount?.data.pch?.telemetry || 0,
       href: "/admin/river-observation?type=pch",
     },
     {
       title: "Duga Air",
       icon: "/image/waterlevel.png",
       color: "bg-blue-600",
-      total: riverCount.data.tma?.total || 0,
-      manual: riverCount.data.tma?.manual || 0,
-      telemetry: riverCount.data.tma?.telemetry || 0,
+      total: riverCount?.data.tma?.total || 0,
+      manual: riverCount?.data.tma?.manual || 0,
+      telemetry: riverCount?.data.tma?.telemetry || 0,
       href: "/admin/river-observation?type=tma",
     },
     {
       title: "Klimatologi",
       icon: "/image/climate.png",
       color: "bg-red-500",
-      total: riverCount.data.iklim?.total || 0,
-      manual: riverCount.data.iklim?.manual || 0,
-      telemetry: riverCount.data.iklim?.telemetry || 0,
+      total: riverCount?.data.iklim?.total || 0,
+      manual: riverCount?.data.iklim?.manual || 0,
+      telemetry: riverCount?.data.iklim?.telemetry || 0,
       href: "/admin/river-observation?type=iklim",
     },
   ];
@@ -76,7 +80,7 @@ const Page = async () => {
               //   popup: river.name,
               // }))}
               search={{
-                data: rivers.data
+                data: rivers?.data
                   ? rivers.data.map((river) => ({
                       position: [river.latitude, river.longitude],
                       title: river.name,
@@ -93,7 +97,7 @@ const Page = async () => {
             <Table
               showHeader={false}
               size="small"
-              dataSource={rivers.data || []}
+              dataSource={rivers?.data || []}
               columns={[
                 { title: "Tipe", dataIndex: "type" },
                 { title: "Nama", dataIndex: "name" },

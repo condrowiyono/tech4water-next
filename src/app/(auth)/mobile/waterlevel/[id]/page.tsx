@@ -11,8 +11,8 @@ type WaterLevelDetailPageProps = {
 
 const fetch = async (id: string) => {
   return Promise.all([
-    fetcher<River>({ url: `/rivers/${id}` }),
-    fetcher<WaterLevelData[]>({ url: `/waterlevels/today/${id}` }),
+    fetcher<River>({ baseURL: process.env.API_URL, url: `/rivers/${id}` }),
+    fetcher<WaterLevelData[]>({ baseURL: process.env.API_URL, url: `/waterlevels/today/${id}` }),
   ]);
 };
 

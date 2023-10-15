@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Upload as AntUpload, UploadProps, Button } from "antd";
 import type { UploadChangeParam } from "antd/lib/upload";

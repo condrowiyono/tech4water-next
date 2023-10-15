@@ -17,7 +17,7 @@ export async function GET(req: Request, { params }: { params: Params }) {
   const { river, type, year } = params;
   const session = await getServerSession(authOptions);
 
-  const host = process.env.NEXT_PUBLIC_API_URL;
+  const host = process.env.API_URL;
   const url = `${host}/admin/${mapType.get(type)}/${river}/export?year=${year}`;
 
   const response = await fetch(url, {

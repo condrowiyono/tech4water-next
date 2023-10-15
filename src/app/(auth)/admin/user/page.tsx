@@ -1,24 +1,33 @@
+"use client";
+
 import fetcher from "@/utils/fetcher";
 import { Pagination, User } from "@/interfaces";
 import { Button, Card, Space } from "antd";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/next-auth";
 import Table from "./table";
 import Filter from "./filter";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRequest } from "ahooks";
 
 type SearchParamsType = Partial<User & Pagination>;
 
-const UserPage = async ({ searchParams }: { searchParams: SearchParamsType }) => {
-  const session = await getServerSession(authOptions);
+const UserPage = ({ searchParams }: { searchParams: SearchParamsType }) => {
+  const session = useSession();
+  const token = session?.data?.accessToken;
 
-  const data = await fetcher<User[]>({
-    url: "/admin/users",
-    params: searchParams,
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
-  });
+  const { data, loading } = useRequest(
+    () =>
+      fetcher<User[]>({
+        url: `admin/rivers`,
+        params: { ...searchParams, type: "pch" },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    {
+      refreshDeps: [searchParams, token],
+    }
+  );
 
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
@@ -34,12 +43,13 @@ const UserPage = async ({ searchParams }: { searchParams: SearchParamsType }) =>
         }
       >
         <Table
+          loading={loading}
           rowKey="id"
-          dataSource={data.data}
+          dataSource={data?.data}
           pagination={{
-            total: data.meta?.total || 0,
-            current: data.meta?.page || 1,
-            pageSize: data.meta?.limit || 10,
+            total: data?.meta?.total || 0,
+            current: data?.meta?.page || 1,
+            pageSize: data?.meta?.limit || 10,
           }}
         />
       </Card>

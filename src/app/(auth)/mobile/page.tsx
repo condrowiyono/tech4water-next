@@ -3,7 +3,7 @@ import ObservationCard, { ObservationCardProps } from "./_components/Observation
 import { RiverCountType } from "@/interfaces";
 
 const Page = async () => {
-  const riverCount = await fetcher<RiverCountType>({ url: "/rivers-count" });
+  const riverCount = await fetcher<RiverCountType>({ baseURL: process.env.API_URL, url: "/rivers-count" });
 
   const observationCard: ObservationCardProps[] = [
     {

@@ -11,8 +11,8 @@ type ClimateDetailPageProps = {
 
 const fetch = async (id: string) => {
   return Promise.all([
-    fetcher<River>({ url: `/rivers/${id}` }),
-    fetcher<ClimateData>({ url: `/climates/today/${id}` }),
+    fetcher<River>({ baseURL: process.env.API_URL, url: `/rivers/${id}` }),
+    fetcher<ClimateData>({ baseURL: process.env.API_URL, url: `/climates/today/${id}` }),
   ]);
 };
 

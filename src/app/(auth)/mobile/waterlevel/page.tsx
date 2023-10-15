@@ -4,7 +4,7 @@ import fetcher from "@/utils/fetcher";
 import { River } from "@/interfaces";
 
 const WaterLevelPage = async () => {
-  const river = await fetcher<River[]>({ url: "/rivers", params: { type: "tma" } });
+  const river = await fetcher<River[]>({ baseURL: process.env.API_URL, url: "/rivers", params: { type: "tma" } });
 
   return (
     <>
