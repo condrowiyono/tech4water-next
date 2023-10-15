@@ -1,4 +1,4 @@
-import BackButton from "../../components/BackButton";
+import BackButton from "../../_components/BackButton";
 import fetcher from "@/utils/fetcher";
 import { RainfallData, River } from "@/interfaces";
 import { Alert, Descriptions, Space } from "antd";

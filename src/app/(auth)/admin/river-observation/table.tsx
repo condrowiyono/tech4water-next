@@ -8,7 +8,7 @@ import { DeleteOutlined, FileExcelOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useState } from "react";
 import Form from "@/components/Form";
-import dayjs from "dayjs";
+import { dayjsTz } from "@/utils/dayjs";
 
 const Table = (props: TableProps<River>) => {
   const router = useRouter();
@@ -94,7 +94,7 @@ const Table = (props: TableProps<River>) => {
         onClose={() => setDrawer({ visible: false, data: undefined })}
       >
         <Form
-          initialValues={{ year: dayjs().year().toString(), type: "xlsx" }}
+          initialValues={{ year: dayjsTz().year().toString(), type: "xlsx" }}
           submitText="Download"
           resetButtonProps={{ style: { display: "none" } }}
           schema={[

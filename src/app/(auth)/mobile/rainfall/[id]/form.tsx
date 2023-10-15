@@ -1,13 +1,13 @@
 "use client";
 
 import { Form, DatePicker, InputNumber, Select, Button, notification, Alert } from "antd";
-import dayjs from "dayjs";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
 import { RainfallData } from "@/interfaces";
 import Upload from "@/components/Upload";
 import { useSession } from "next-auth/react";
+import { formatString, today } from "@/utils/dayjs";
 
 const InputForm = () => {
   const token = useSession().data?.accessToken;
@@ -34,11 +34,11 @@ const InputForm = () => {
 
   const handleFinish = (data: Partial<RainfallData>) => {
     const { date, ...rest } = data;
-    run({ ...rest, river_id: Number(id), date: dayjs(date).toISOString() });
+    run({ ...rest, river_id: Number(id), date: formatString(date) });
   };
 
   return (
-    <Form initialValues={{ date: dayjs() }} onFinish={handleFinish} layout="vertical">
+    <Form initialValues={{ date: today() }} onFinish={handleFinish} layout="vertical">
       <Form.Item label="Tanngal" name="date">
         <DatePicker disabled />
       </Form.Item>

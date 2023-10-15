@@ -9,7 +9,7 @@ import Link from "next/link";
 const Layout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const pathname = usePathname();
-  const routeSegment = pathname.split("/").slice(0, 3).join("/");
+  const routeSegment = pathname.split("/").slice(0, 4).join("/");
 
   return (
     <BaseLayout hasSider>
@@ -39,8 +39,26 @@ const Layout = ({ children }: PropsWithChildren) => {
               key: "/admin",
             },
             {
-              label: "Daftar Pos ",
+              label: "Daftar Pos",
               key: "/admin/river-observation",
+            },
+            {
+              label: "Data",
+              key: "#",
+              children: [
+                {
+                  label: "Pos Curah Hujan",
+                  key: "/admin/data/rainfall",
+                },
+                {
+                  label: "Pos Duga Air",
+                  key: "/admin/data/waterlevel",
+                },
+                {
+                  label: "Pos Klimatologi",
+                  key: "/admin/data/climate",
+                },
+              ],
             },
             {
               label: "Daftar User",

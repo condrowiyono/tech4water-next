@@ -1,10 +1,11 @@
 import fetcher from "@/utils/fetcher";
-import ObservationCard, { ObservationCardProps } from "../mobile/components/ObservationCard";
+import { ObservationCardProps } from "../mobile/_components/ObservationCard";
 import { River, RiverCountType } from "@/interfaces";
-import { Card, Col, Row, Space } from "antd";
+import { Card, Col, Row, Table } from "antd";
 import Meta from "antd/lib/card/Meta";
 import Map from "@/components/Map";
 import Link from "next/link";
+import Clock from "./_components/clock";
 
 const Page = async () => {
   const riverCount = await fetcher<RiverCountType>({ url: "/rivers-count" });
@@ -43,6 +44,28 @@ const Page = async () => {
   return (
     <>
       <Row gutter={[16, 16]}>
+        <Col xs={12} lg={6}>
+          <Card hoverable className="h-full flex items-center justify-center">
+            <Clock />
+          </Card>
+        </Col>
+        {observationCard.map((item, index) => (
+          <Col xs={12} lg={6} key={index}>
+            <Card hoverable className="h-full">
+              <Link href={item.href || "#"}>
+                <Meta
+                  title={item.title}
+                  description={
+                    <>
+                      <strong>Total: {item.total || item.manual + item.telemetry}</strong> |
+                      <strong> Manual: {item.manual}</strong> |<strong> Telemetry: {item.telemetry}</strong>
+                    </>
+                  }
+                />
+              </Link>
+            </Card>
+          </Col>
+        ))}
         <Col sm={24} lg={18}>
           <Card hoverable>
             <Map
@@ -65,24 +88,19 @@ const Page = async () => {
             />
           </Card>
         </Col>
-        <Col sm={24} span={4}></Col>
-        {observationCard.map((item, index) => (
-          <Col xs={12} lg={6} key={index}>
-            <Card hoverable cover={<img alt="example" src={item.icon} />}>
-              <Link href={item.href || "#"}>
-                <Meta
-                  title={item.title}
-                  description={
-                    <>
-                      <strong>Total: {item.total || item.manual + item.telemetry}</strong> |
-                      <strong> Manual: {item.manual}</strong> |<strong> Telemetry: {item.telemetry}</strong>
-                    </>
-                  }
-                />
-              </Link>
-            </Card>
-          </Col>
-        ))}
+        <Col sm={24} lg={6}>
+          <Card hoverable title="Data Pos">
+            <Table
+              showHeader={false}
+              size="small"
+              dataSource={rivers.data || []}
+              columns={[
+                { title: "Tipe", dataIndex: "type" },
+                { title: "Nama", dataIndex: "name" },
+              ]}
+            />
+          </Card>
+        </Col>
       </Row>
     </>
   );

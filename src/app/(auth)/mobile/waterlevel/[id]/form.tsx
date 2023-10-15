@@ -1,13 +1,12 @@
 "use client";
 
 import { Form, DatePicker, InputNumber, Select, Button, notification, Segmented, Alert, Space } from "antd";
-import dayjs from "dayjs";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
 import { WaterLevelData } from "@/interfaces";
 import { useEffect, useState } from "react";
-import { defaultTimezone, setTimeToDate } from "@/utils/dayjs";
+import { dayjsTz, formatString, setTimeToDate } from "@/utils/dayjs";
 import Detail from "./detail";
 import Upload from "@/components/Upload";
 import { useSession } from "next-auth/react";
@@ -53,12 +52,12 @@ const InputForm = ({ value }: InputFormProps) => {
 
   const handleFinish = (data: Partial<WaterLevelData>) => {
     const { date, ...rest } = data;
-    run({ ...rest, river_id: Number(id), date: dayjs(date).toISOString() });
+    run({ ...rest, river_id: Number(id), date: formatString(date) });
   };
 
   const map = new Map<string | number, Partial<WaterLevelData>>(
     Array.from(value || [], (item) => {
-      const date = dayjs(item.date).tz(defaultTimezone);
+      const date = dayjsTz(item.date);
       const hour = date.hour();
       if (hour === PAGI) {
         return ["Pagi", item];

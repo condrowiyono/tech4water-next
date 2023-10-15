@@ -3,7 +3,7 @@ import fetcher from "@/utils/fetcher";
 import { ClimateData, River } from "@/interfaces";
 import InputForm from "./form";
 import Detail from "./detail";
-import BackButton from "../../components/BackButton";
+import BackButton from "../../_components/BackButton";
 
 type ClimateDetailPageProps = {
   params: { id: string };

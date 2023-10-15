@@ -3,7 +3,7 @@ import { Descriptions } from "antd";
 import fetcher from "@/utils/fetcher";
 import { WaterLevelData, River } from "@/interfaces";
 import InputForm from "./form";
-import BackButton from "../../components/BackButton";
+import BackButton from "../../_components/BackButton";
 
 type WaterLevelDetailPageProps = {
   params: { id: string };

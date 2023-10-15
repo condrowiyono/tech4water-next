@@ -1,5 +1,5 @@
 import fetcher from "@/utils/fetcher";
-import ObservationCard, { ObservationCardProps } from "./components/ObservationCard";
+import ObservationCard, { ObservationCardProps } from "./_components/ObservationCard";
 import { RiverCountType } from "@/interfaces";
 
 const Page = async () => {

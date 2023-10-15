@@ -1,7 +1,7 @@
 "use client";
 
 import { Form, DatePicker, InputNumber, Select, Button, notification, Alert, Row, Col } from "antd";
-import dayjs from "dayjs";
+import { today, formatString } from "@/utils/dayjs";
 import { useRequest } from "ahooks";
 import fetcher, { ErrorResponse } from "@/utils/fetcher";
 import { useParams, useRouter } from "next/navigation";
@@ -34,15 +34,11 @@ const InputForm = () => {
 
   const handleFinish = (data: Partial<ClimateData>) => {
     const { date, ...rest } = data;
-    run({
-      ...rest,
-      river_id: Number(id),
-      date: dayjs(date).toISOString(),
-    });
+    run({ ...rest, river_id: Number(id), date: formatString(date) });
   };
 
   return (
-    <Form onFinish={handleFinish} initialValues={{ date: dayjs() }} layout="vertical">
+    <Form onFinish={handleFinish} initialValues={{ date: today() }} layout="vertical">
       <Form.Item label="Tanngal" name="date">
         <DatePicker disabled />
       </Form.Item>

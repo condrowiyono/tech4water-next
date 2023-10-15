@@ -18,7 +18,7 @@ export async function GET(req: Request, { params }: { params: Params }) {
   const session = await getServerSession(authOptions);
 
   const host = process.env.NEXT_PUBLIC_API_URL;
-  const url = `${host}/admin/${mapType.get(type)}/export/${river}?year=${year}`;
+  const url = `${host}/admin/${mapType.get(type)}/${river}/export?year=${year}`;
 
   const response = await fetch(url, {
     headers: { Authorization: `Bearer ${session?.accessToken}` },

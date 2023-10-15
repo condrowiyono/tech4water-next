@@ -1,5 +1,5 @@
-import BackButton from "../components/BackButton";
-import RiverCard from "../components/RiverCard";
+import BackButton from "../_components/BackButton";
+import RiverCard from "../_components/RiverCard";
 import fetcher from "@/utils/fetcher";
 import { River } from "@/interfaces";
 

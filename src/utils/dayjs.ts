@@ -1,20 +1,39 @@
-import dayjs from "dayjs"
-import utc from "dayjs/plugin/utc"
-import timezone from "dayjs/plugin/timezone"
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import customeParseFormat from "dayjs/plugin/customParseFormat";
 
-const defaultTimezone = "Asia/Singapore"
+const defaultTimezone = "Asia/Singapore";
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
+dayjs.extend(customeParseFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale("id");
 
-const formatDateTime = (date: string | Date) => {
-  return dayjs(date).tz(defaultTimezone).format("DD MMMM YYYY HH:mm")
-}
+dayjs.tz.setDefault(defaultTimezone);
 
+const formatDateTime = (
+  date: string | Date | dayjs.Dayjs = dayjs().tz(defaultTimezone),
+  format = "DD MMMM YYYY HH:mm"
+) => {
+  return dayjs(date).tz(defaultTimezone).format(format);
+};
 
-const setTimeToDate = (date: string | Date, h = 0, m = 0, s = 0) => {
-  return dayjs(date).tz(defaultTimezone).set("hour", h).set("minute", m).set("second", s)
-}
+const formatString = (date: string | Date | dayjs.Dayjs = dayjs().tz(defaultTimezone)) => {
+  return dayjs(date).tz(defaultTimezone).format();
+};
 
+const setTimeToDate = (date: string | Date | dayjs.Dayjs, h = 0, m = 0, s = 0) => {
+  return dayjs(date).tz(defaultTimezone).set("hour", h).set("minute", m).set("second", s);
+};
 
-export { defaultTimezone, setTimeToDate, formatDateTime}
+const today = () => {
+  return dayjs().tz(defaultTimezone);
+};
+
+const dayjsTz = (date: string | Date | dayjs.Dayjs = dayjs().tz(defaultTimezone)) => {
+  return dayjs(date).tz(defaultTimezone);
+};
+
+export { defaultTimezone, formatString, today, setTimeToDate, formatDateTime, dayjsTz };
+export default dayjs;

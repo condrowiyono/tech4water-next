@@ -116,3 +116,8 @@ export type Pagination = {
   limit: number;
   page: number;
 };
+
+export type TimeChartDate = {
+  // { "2021-01-01T00:00:00.000Z": 1 }
+  [key: string]: number;
+};
