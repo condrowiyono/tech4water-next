@@ -172,10 +172,47 @@ const Table = (props: TableProps<River>) => {
         }}
       >
         <Space direction="vertical" className="w-full">
-          <input ref={importRef} type="file" accept=".xlsx" />
-          <Button type="primary" block onClick={handleImport}>
-            Import
-          </Button>
+          <Space direction="vertical" className="w-full">
+            <h1 className="text-xl">Upload</h1>
+            <input ref={importRef} type="file" accept=".xlsx" />
+            <Button type="primary" block onClick={handleImport}>
+              Import
+            </Button>
+          </Space>
+          <div>
+            <h1 className="text-xl">Template</h1>
+            <AntdTable
+              size="small"
+              pagination={false}
+              dataSource={[
+                { type: "tma", template: "/template/template_tma.xlsx" },
+                { type: "pch", template: "/template/template_pch.xlsx" },
+                { type: "iklim", template: "/template/template_iklim.xlsx" },
+              ]}
+              columns={[
+                {
+                  title: "Jenis Data",
+                  dataIndex: "type",
+                },
+                {
+                  title: "Template",
+                  dataIndex: "template",
+                  render: (value) => (
+                    <a href={value} target="_blank" rel="noreferrer">
+                      Download
+                    </a>
+                  ),
+                },
+              ]}
+            />
+            <div className="text-sm text-gray-500 mt-2">
+              <p>Untuk menghindari kesalahan dalam mengisi data, gunakan template yang sudah disediakan.</p>
+              <p>
+                <b>Perhatian:</b> Jangan mengubah nama kolom, urutan kolom, dan sheet pada template. Pastikan format
+                data &quot;Date&quot; adalah &quot;YYYY-MM-DD&quot;
+              </p>
+            </div>
+          </div>
         </Space>
       </Drawer>
     </>
