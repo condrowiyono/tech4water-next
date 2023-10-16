@@ -18,11 +18,9 @@ const UserPage = ({ searchParams }: { searchParams: SearchParamsType }) => {
   const { data, loading } = useRequest(
     () =>
       fetcher<User[]>({
-        url: `admin/rivers`,
-        params: { ...searchParams, type: "pch" },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        url: "/admin/users",
+        params: searchParams,
+        headers: { Authorization: `Bearer ${token}` },
       }),
     {
       refreshDeps: [searchParams, token],
