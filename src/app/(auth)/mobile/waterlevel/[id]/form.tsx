@@ -102,7 +102,7 @@ const InputForm = ({ value }: InputFormProps) => {
             <DatePicker showTime disabled />
           </Form.Item>
           <Form.Item label="Hasil Pengamatan" name="data">
-            <InputNumber type="number" inputMode="numeric" suffix="mm" />
+            <InputNumber type="number" inputMode="numeric" suffix="mdpl" />
           </Form.Item>
           <Form.Item label="Keterangan" name="description">
             <Select

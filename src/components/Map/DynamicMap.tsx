@@ -31,7 +31,7 @@ const Map = ({ children, width, height, markers, search, ...rest }: DynamicMapPr
   }, []);
 
   return (
-    <MapContainer style={{ width: "100%", height: "100%" }} {...rest}>
+    <MapContainer style={{ width: "100%", height: "100%", zIndex: 0 }} {...rest}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

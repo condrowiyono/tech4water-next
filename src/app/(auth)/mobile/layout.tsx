@@ -41,7 +41,7 @@ const Layout = async ({ children }: PropsWithChildren) => {
             <div className="font-bold">Email</div> hidrologi_bwskv@gmail.com
           </div>
           <div>
-            <div className="font-bold">Email</div>0812 5533 9011
+            <div className="font-bold">Phone</div>0812 5533 9011
           </div>
         </div>
         <iframe
